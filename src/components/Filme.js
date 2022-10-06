@@ -47,7 +47,6 @@ const EstiloTitulo = styled.div`
 const EstiloCorpo = styled.div`
     margin-bottom: 117px;
 `
-
 const EstiloSessoes = styled.div`
     height: 100px;
     margin: 0 24px;
@@ -57,11 +56,9 @@ const EstiloSessoes = styled.div`
         margin: 22px 0;
     }
 `
-
 const EstiloContainerBotoes = styled.div`
     display: flex
 `
-
 const EstiloBotoes = styled.button`
     width: 83px;
     height:43px;
@@ -86,7 +83,6 @@ const EstiloFooter = styled.div`
     align-items: center;
     padding: 14px 10px;
 `
-
 const EstiloContainerImgs = styled.div`
     padding: 5px;
     background-color: #ffffff;
@@ -98,7 +94,6 @@ const EstiloContainerImgs = styled.div`
         height: 72px;
     }
 `
-
 const EstiloContainerTexto = styled.div`
     font-size: 26px;
     color: #293845;

@@ -12,9 +12,9 @@ export default function App() {
             <GlobalStyle />
             <Header />
             {/* <Catalogo /> */}
-            <Filme />
-            {/* <Sessao />
-            <Sucesso /> */}
+            {/* <Filme /> */}
+            {/* <Sessao /> */}
+            <Sucesso />
         </>
     )
 }
