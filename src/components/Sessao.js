@@ -124,7 +124,7 @@ const EstiloListaOpcoes = styled.div`
 const EstiloOpcoes = styled.div`
      width: 26px;
     height: 26px;
-    background-color: ${props => props.className === 'selecionado' ? '#0E7D71' : props.className === 'disponivel' ? '#C3CFD9' : '#FBE192'};
+    background-color: ${props => props.className === 'selecionado' ? '#1AAE9E' : props.className === 'disponivel' ? '#C3CFD9' : '#FBE192'};
     border-radius: 50%;
     margin: 9px  4px;
 `

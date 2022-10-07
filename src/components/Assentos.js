@@ -8,7 +8,12 @@ export default function Assentos({ assentos, item }) {
 
 
     function selecionar() {
-        setSelecionado(true)
+        if(selecionado){
+            setSelecionado(false)
+        }else{
+            setSelecionado(true)
+        }
+        
     }
 
 
@@ -26,7 +31,7 @@ const EstiloAssento = styled.div`
     align-items: center;
     width: 26px;
     height: 26px;
-    background-color: ${props => props.selecionado == true ? '#0E7D71' : props.isAvailable == false ? '#FBE192' : '#C3CFD9'};    
+    background-color: ${props => props.selecionado == true ? '#1AAE9E' : props.isAvailable == false ? '#FBE192' : '#C3CFD9'};    
     border-radius: 50%;
     margin: 9px  4px;
     >p{
