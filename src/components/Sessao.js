@@ -1,9 +1,8 @@
 import axios from "axios"
 import { useState, useEffect } from "react"
 import styled from "styled-components"
-import image1 from '../image.png'
+import Assentos from "./Assentos"
 
-// 
 
 export default function Sessao() {
 
@@ -11,6 +10,7 @@ export default function Sessao() {
     const [hora, setHora] = useState('')
     const [data, setData] = useState('')
     const [movie, setMovie] = useState({})
+    const [selecionado, setSelecionado] = useState(false)
 
     useEffect(() => {
         const requisicao = axios.get('https://mock-api.driven.com.br/api/v5/cineflex/showtimes/12/seats')
@@ -24,6 +24,10 @@ export default function Sessao() {
 
     }, [])
 
+    function selecionar() {
+        setSelecionado(true)
+    }
+
     return (
         <EstiloTela>
             <EstiloTitulo>
@@ -31,23 +35,20 @@ export default function Sessao() {
             </EstiloTitulo>
             <EstiloListaDeAcentos>
                 {assentos.length === 0 ? <p>carregando...</p> : assentos.map((item) => {
-                    return (
-                        <EstiloAssento key={item.id} isAvailable={item.isAvailable}>
-                            <p>{item.name}</p>
-                        </EstiloAssento>
+                    return(
+                        <Assentos assentos={assentos}  item={item}/>
                     )
                 })}
-
                 <EstiloListaOpcoes>
-                    <EstiloOpcoes />
+                    <EstiloOpcoes className="selecionado"/>
                     <p>Selecionado</p>
                 </EstiloListaOpcoes>
                 <EstiloListaOpcoes>
-                    <EstiloOpcoes />
+                    <EstiloOpcoes className="disponivel"/>
                     <p>Disponível</p>
                 </EstiloListaOpcoes>
                 <EstiloListaOpcoes>
-                    <EstiloOpcoes />
+                    <EstiloOpcoes className="indisponivel"/>
                     <p>Indisponível</p>
                 </EstiloListaOpcoes>
             </EstiloListaDeAcentos>
@@ -62,7 +63,7 @@ export default function Sessao() {
             </EstiloBotao>
             <EstiloFooter>
                 <EstiloContainerImgs>
-                    {assentos.length === 0 ? <p>carregando...</p> : <img src={movie.posterURL}/>}
+                    {assentos.length === 0 ? <p>carregando...</p> : <img src={movie.posterURL} />}
                 </EstiloContainerImgs>
                 <EstiloContainerTexto>
                     {assentos.length === 0 ? <p>carregando...</p> : <h1>{movie.title}</h1>}
@@ -105,7 +106,7 @@ const EstiloAssento = styled.div`
     align-items: center;
     width: 26px;
     height: 26px;
-    background-color: ${props => props.isAvailable == true ? '#C3CFD9' : '#FBE192'};    
+    background-color: ${props => props.selecionado == true ? '#0E7D71' : props.isAvailable == false ? '#FBE192' : '#C3CFD9'};    
     border-radius: 50%;
     margin: 9px  4px;
     >p{
@@ -123,7 +124,7 @@ const EstiloListaOpcoes = styled.div`
 const EstiloOpcoes = styled.div`
      width: 26px;
     height: 26px;
-    background-color: #C3CFD9;
+    background-color: ${props => props.className === 'selecionado' ? '#0E7D71' : props.className === 'disponivel' ? '#C3CFD9' : '#FBE192'};
     border-radius: 50%;
     margin: 9px  4px;
 `
@@ -137,7 +138,7 @@ const EstiloDados = styled.div`
     >input{
         width: 327px;
         height: 51px;
-        border: solid 1px lightgray;
+        border: solid 1px #E8833A;
         font-size: 18px;
     }
 `
