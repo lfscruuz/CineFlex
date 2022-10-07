@@ -1,32 +1,47 @@
+import axios from "axios"
+import { useState, useEffect } from "react"
 import styled from "styled-components"
 import image1 from '../image.png'
-    /* background-color: ${estilo == 'selecionado' ? '#1AAE9E' : estilo == 'dispnível' ? '#C3CFD9' : '#FBE192'}; */
 
+// background-color: ${props.isAvailable == 'selecionado' ? '#1AAE9E' : props.isAvailable == 'dispnível' ? '#C3CFD9' : '#FBE192'};
 
 export default function Sessao() {
-    const assentos = []
-    for (let i = 1; i < 51; i++) {
-        assentos.push(i)
-    }
-    console.log(assentos)
+
+    const [assentos, setAssentos] = useState([])
+
+    useEffect(() => {
+        const requisicao = axios.get('https://mock-api.driven.com.br/api/v5/cineflex/showtimes/1/seats')
+
+        requisicao.then((resposta) => {
+            setAssentos(resposta.data.seats)
+        })
+
+    }, [])
 
     return (
         <EstiloTela>
             <EstiloTitulo>
-                <h1>Selecione o horário</h1>
+                <h1>Selecione o(s) assento(s)</h1>
             </EstiloTitulo>
             <EstiloListaDeAcentos>
-                {assentos.map((i) => <EstiloAssento><p key={i}>{i}</p></EstiloAssento>)}
+                {assentos.length === 0 ? <p>carregando...</p> : (console.log(assentos), assentos.map((item) => {
+                    return (
+                        <EstiloAssento key={item.id} isAvailable={item.isAvailable}>
+                            <p>{item.name}</p>
+                        </EstiloAssento>
+                    )
+                }))}
+
                 <EstiloListaOpcoes>
-                    <EstiloOpcoes/>
+                    <EstiloOpcoes />
                     <p>Selecionado</p>
                 </EstiloListaOpcoes>
                 <EstiloListaOpcoes>
-                    <EstiloOpcoes/>
+                    <EstiloOpcoes />
                     <p>Disponível</p>
                 </EstiloListaOpcoes>
                 <EstiloListaOpcoes>
-                    <EstiloOpcoes/>
+                    <EstiloOpcoes />
                     <p>Indisponível</p>
                 </EstiloListaOpcoes>
             </EstiloListaDeAcentos>
@@ -119,7 +134,7 @@ const EstiloDados = styled.div`
         border: solid 1px lightgray;
         font-size: 18px;
     }
-`   
+`
 
 const EstiloBotao = styled.button`
     width: 225px;

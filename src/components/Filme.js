@@ -1,34 +1,50 @@
+import axios from "axios"
+import { useEffect, useState } from "react"
 import styled from "styled-components"
 import image1 from '../image.png'
 
 export default function Filme() {
+
+    const [sessao, setSessao] = useState({})
+    const [horarios, setHorarios] = useState([])
+
+    useEffect(() => {
+        const requisicao = axios.get('https://mock-api.driven.com.br/api/v5/cineflex/movies/7/showtimes')
+        requisicao.then((resposta) => {
+            setSessao(resposta.data)
+            setHorarios(resposta.data.days)
+        })
+
+    }, [])
+
     return (
         <>
             <EstiloTitulo>
                 <h1>Selecione o horário</h1>
             </EstiloTitulo>
             <div>
-                <EstiloSessoes>
-                    <p>Quinta-feira - 24/06/2021</p>
-                    <EstiloContainerBotoes>
-                        <EstiloBotoes>15:00</EstiloBotoes>
-                        <EstiloBotoes>19:00</EstiloBotoes>
-                    </EstiloContainerBotoes>
-                </EstiloSessoes>
-                <EstiloSessoes>
-                    <p>Quinta-feira - 24/06/2021</p>
-                    <EstiloContainerBotoes>
-                        <EstiloBotoes>15:00</EstiloBotoes>
-                        <EstiloBotoes>19:00</EstiloBotoes>
-                    </EstiloContainerBotoes>
-                </EstiloSessoes>
+                {horarios.length === 0 ? <p>carregando...</p> : horarios.map((item) => {
+                    console.log(item)
+                    return (
+                        <EstiloSessoes>
+                            <p>{item.date}</p>
+                            <EstiloContainerBotoes>
+                                {item.showtimes.map((st) =>{
+                                    return(
+                                        <EstiloBotoes>{st.name}</EstiloBotoes>
+                                    )
+                                })}
+                            </EstiloContainerBotoes>
+                        </EstiloSessoes>
+                    )
+                })}
             </div>
             <EstiloFooter>
                 <EstiloContainerImgs>
-                    <img src={image1} />
+                    {sessao.length === 0 ? <p>carregando...</p> : <img src={sessao.posterURL}/>}
                 </EstiloContainerImgs>
                 <EstiloContainerTexto>
-                    <h1>Enola Holmes</h1>
+                    {sessao.length === 0 ? <p>carregando...</p> : <h1>{sessao.title}</h1>}
                 </EstiloContainerTexto>
             </EstiloFooter>
         </>

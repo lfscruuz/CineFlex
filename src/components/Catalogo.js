@@ -1,31 +1,26 @@
 import styled from "styled-components"
-import image1 from '../image.png'
+import axios from "axios"
+import { useEffect, useState } from "react"
 
 export default function Catalogo() {
+
+    const [filmes, setFilmes] = useState([])
+
+    useEffect(() => {
+        const requisicao = axios.get('https://mock-api.driven.com.br/api/v5/cineflex/movies')
+        requisicao.then((resposta) => {
+            setFilmes(resposta.data)
+        })
+
+    }, [])
+
     return (
         <>
             <EstiloTitulo>
                 <h1>Selecione o filme</h1>
             </EstiloTitulo>
             <EstiloCatalogo>
-                <EstiloCartaz>
-                    <img src={image1}/>
-                </EstiloCartaz>
-                <EstiloCartaz>
-                    <img src={image1}/>
-                </EstiloCartaz>
-                <EstiloCartaz>
-                    <img src={image1}/>
-                </EstiloCartaz>
-                <EstiloCartaz>
-                    <img src={image1}/>
-                </EstiloCartaz>
-                <EstiloCartaz>
-                    <img src={image1}/>
-                </EstiloCartaz>
-                <EstiloCartaz>
-                    <img src={image1}/>
-                </EstiloCartaz>
+                {filmes.length === 0 ? <p>Carregando...</p> : filmes.map((item) => { console.log(item); return <EstiloCartaz><img src={item.posterURL} /></EstiloCartaz>})}
             </EstiloCatalogo>
         </>
     )
