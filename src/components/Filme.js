@@ -4,9 +4,9 @@ import styled from "styled-components"
 import image1 from '../image.png'
 
 export default function Filme() {
-
-    const [sessao, setSessao] = useState({})
     const [horarios, setHorarios] = useState([])
+    const [sessao, setSessao] = useState({})
+
 
     useEffect(() => {
         const requisicao = axios.get('https://mock-api.driven.com.br/api/v5/cineflex/movies/7/showtimes')
@@ -29,8 +29,8 @@ export default function Filme() {
                         <EstiloSessoes>
                             <p>{item.date}</p>
                             <EstiloContainerBotoes>
-                                {item.showtimes.map((st) =>{
-                                    return(
+                                {item.showtimes.map((st) => {
+                                    return (
                                         <EstiloBotoes>{st.name}</EstiloBotoes>
                                     )
                                 })}
@@ -41,7 +41,7 @@ export default function Filme() {
             </div>
             <EstiloFooter>
                 <EstiloContainerImgs>
-                    {sessao.length === 0 ? <p>carregando...</p> : <img src={sessao.posterURL}/>}
+                    {sessao.length === 0 ? <p>carregando...</p> : <img src={sessao.posterURL} />}
                 </EstiloContainerImgs>
                 <EstiloContainerTexto>
                     {sessao.length === 0 ? <p>carregando...</p> : <h1>{sessao.title}</h1>}

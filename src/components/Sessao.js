@@ -3,17 +3,23 @@ import { useState, useEffect } from "react"
 import styled from "styled-components"
 import image1 from '../image.png'
 
-// background-color: ${props.isAvailable == 'selecionado' ? '#1AAE9E' : props.isAvailable == 'dispnível' ? '#C3CFD9' : '#FBE192'};
+// 
 
 export default function Sessao() {
 
     const [assentos, setAssentos] = useState([])
+    const [hora, setHora] = useState('')
+    const [data, setData] = useState('')
+    const [movie, setMovie] = useState({})
 
     useEffect(() => {
-        const requisicao = axios.get('https://mock-api.driven.com.br/api/v5/cineflex/showtimes/1/seats')
+        const requisicao = axios.get('https://mock-api.driven.com.br/api/v5/cineflex/showtimes/12/seats')
 
         requisicao.then((resposta) => {
             setAssentos(resposta.data.seats)
+            setHora(resposta.data.name)
+            setData(resposta.data.day.weekday)
+            setMovie(resposta.data.movie)
         })
 
     }, [])
@@ -24,13 +30,13 @@ export default function Sessao() {
                 <h1>Selecione o(s) assento(s)</h1>
             </EstiloTitulo>
             <EstiloListaDeAcentos>
-                {assentos.length === 0 ? <p>carregando...</p> : (console.log(assentos), assentos.map((item) => {
+                {assentos.length === 0 ? <p>carregando...</p> : assentos.map((item) => {
                     return (
                         <EstiloAssento key={item.id} isAvailable={item.isAvailable}>
                             <p>{item.name}</p>
                         </EstiloAssento>
                     )
-                }))}
+                })}
 
                 <EstiloListaOpcoes>
                     <EstiloOpcoes />
@@ -56,11 +62,11 @@ export default function Sessao() {
             </EstiloBotao>
             <EstiloFooter>
                 <EstiloContainerImgs>
-                    <img src={image1} />
+                    {assentos.length === 0 ? <p>carregando...</p> : <img src={movie.posterURL}/>}
                 </EstiloContainerImgs>
                 <EstiloContainerTexto>
-                    <h1>Enola Holmes</h1>
-                    <h1>Quinta-Feira - 15:00</h1>
+                    {assentos.length === 0 ? <p>carregando...</p> : <h1>{movie.title}</h1>}
+                    {assentos.length === 0 ? <p>carregando...</p> : <h1>{data} - {hora}</h1>}
                 </EstiloContainerTexto>
             </EstiloFooter>
         </EstiloTela>
@@ -99,7 +105,7 @@ const EstiloAssento = styled.div`
     align-items: center;
     width: 26px;
     height: 26px;
-    background-color: #C3CFD9;
+    background-color: ${props => props.isAvailable == true ? '#C3CFD9' : '#FBE192'};    
     border-radius: 50%;
     margin: 9px  4px;
     >p{
