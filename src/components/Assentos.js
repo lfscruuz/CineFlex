@@ -8,10 +8,14 @@ export default function Assentos({ assentos, item }) {
 
 
     function selecionar() {
-        if(selecionado){
-            setSelecionado(false)
+        if (!item.isAvailable){
+            alert('Assento não disponível')
         }else{
-            setSelecionado(true)
+            if(selecionado){
+                setSelecionado(false)
+            }else{
+                setSelecionado(true)
+            }
         }
         
     }
