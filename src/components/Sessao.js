@@ -47,40 +47,40 @@ export default function Sessao({hora, setHora, dia, setDia, data, setData, movie
                     )
                 })}
                 <EstiloListaOpcoes>
-                    <EstiloOpcoes className="selecionado" />
+                    <EstiloOpcoes className="selecionado" ata-identifier="seat-selected-subtitle"/>
                     <p>Selecionado</p>
                 </EstiloListaOpcoes>
                 <EstiloListaOpcoes>
-                    <EstiloOpcoes className="disponivel" />
+                    <EstiloOpcoes className="disponivel" data-identifier="seat-available-subtitle"/>
                     <p>Disponível</p>
                 </EstiloListaOpcoes>
                 <EstiloListaOpcoes>
-                    <EstiloOpcoes className="indisponivel" />
+                    <EstiloOpcoes className="indisponivel" data-identifier="seat-unavailable-subtitle"/>
                     <p>Indisponível</p>
                 </EstiloListaOpcoes>
             </EstiloListaDeAcentos>
             <EstiloDados>
                 <h1>Nome do comprador</h1>
-                <input onChange={(e) => {
+                <input data-identifier="buyer-name-input" onChange={(e) => {
                     setNome(e.target.value)
                     // console.log(nome)
                 }} placeholder="Digite seu nome..."></input>
                 <h1>CPF do comprador</h1>
-                <input onChange={(e) => {
+                <input data-identifier="buyer-cpf-input" onChange={(e) => {
                     setCPF(e.target.value)
                     // console.log(CPF)
                 }} placeholder="Digite seu CPF (somente números)..."></input>
             </EstiloDados>
             <Link to='/sucesso'>
-                <EstiloBotao onClick={mandarDados} >
+                <EstiloBotao data-identifier="reservation-btn" onClick={mandarDados} >
                     <p>Reservar assento(s)</p>
                 </EstiloBotao>
             </Link>
             <EstiloFooter>
-                <EstiloContainerImgs>
+                <EstiloContainerImgs data-identifier="movie-img-preview">
                     {assentos.length === 0 ? <p>carregando...</p> : <img src={movie.posterURL} />}
                 </EstiloContainerImgs>
-                <EstiloContainerTexto>
+                <EstiloContainerTexto data-identifier="movie-and-session-infos-preview">
                     {assentos.length === 0 ? <p>carregando...</p> : <h1>{movie.title}</h1>}
                     {assentos.length === 0 ? <p>carregando...</p> : <h1>{dia} - {hora}</h1>}
                 </EstiloContainerTexto>

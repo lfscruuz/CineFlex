@@ -26,7 +26,7 @@ export default function Assentos({ assentos, item, ids, setIds }) {
 
 
     return (
-        <EstiloAssento onClick={selecionar} isAvailable={item.isAvailable} selecionado={selecionado}>
+        <EstiloAssento data-identifier="seat" onClick={selecionar} isAvailable={item.isAvailable} selecionado={selecionado}>
             <p>{item.name}</p>
         </EstiloAssento>
     )

@@ -27,14 +27,14 @@ export default function Filme() {
             <div>
                 {horarios.length === 0 ? <p>carregando...</p> : horarios.map((item) => {
                     return (
-                        <EstiloSessoes>
+                        <EstiloSessoes data-identifier="session-date">
                             <p>{item.date}</p>
-                            <EstiloContainerBotoes>
+                            <EstiloContainerBotoes >
                                 {item.showtimes.map((st) => {
                                     console.log(st)
                                     return (
                                         <Link to={`/assentos/${st.id}`}>
-                                            <EstiloBotoes>
+                                            <EstiloBotoes data-identifier="hour-minute-btn">
                                                 {st.name}
                                             </EstiloBotoes>
                                         </Link>
@@ -46,10 +46,10 @@ export default function Filme() {
                 })}
             </div>
             <EstiloFooter>
-                <EstiloContainerImgs>
+                <EstiloContainerImgs data-identifier="movie-img-preview">
                     {sessao.length === 0 ? <p>carregando...</p> : <img src={sessao.posterURL} />}
                 </EstiloContainerImgs>
-                <EstiloContainerTexto>
+                <EstiloContainerTexto data-identifier="movie-and-session-infos-preview">
                     {sessao.length === 0 ? <p>carregando...</p> : <h1>{sessao.title}</h1>}
                 </EstiloContainerTexto>
             </EstiloFooter>

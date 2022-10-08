@@ -4,7 +4,7 @@ import styled from "styled-components"
 
 export default function Cartaz({item}) {
     return (
-        <EstiloCartaz>
+        <EstiloCartaz data-identifier="movie-outdoor">
             <img src={item.posterURL} />
         </EstiloCartaz>
     )
