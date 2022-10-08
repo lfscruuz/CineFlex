@@ -1,32 +1,39 @@
 import axios from "axios"
 import { useState, useEffect } from "react"
+import { Link, useParams } from "react-router-dom"
 import styled from "styled-components"
 import Assentos from "./Assentos"
 
 
-export default function Sessao() {
+export default function Sessao({hora, setHora, dia, setDia, data, setData, movie, setMovie, nome, setNome, CPF, setCPF, ids, setIds, ingresso}) {
 
     const [assentos, setAssentos] = useState([])
-    const [hora, setHora] = useState('')
-    const [data, setData] = useState('')
-    const [movie, setMovie] = useState({})
-    const [selecionado, setSelecionado] = useState(false)
+    const {idSessao} = useParams()
+
+    function mandarDados() {
+        setIds(ids)
+        console.log(ids)
+        ingresso.ids = ids
+        ingresso.name = nome
+        ingresso.cpf = CPF
+        console.log(ingresso)
+    }
 
     useEffect(() => {
-        const requisicao = axios.get('https://mock-api.driven.com.br/api/v5/cineflex/showtimes/12/seats')
+        const requisicao = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${idSessao}/seats`)
 
         requisicao.then((resposta) => {
+            console.log(resposta.data)
             setAssentos(resposta.data.seats)
             setHora(resposta.data.name)
-            setData(resposta.data.day.weekday)
+            setDia(resposta.data.day.weekday)
             setMovie(resposta.data.movie)
+            setData(resposta.data.day.date)
         })
 
     }, [])
 
-    function selecionar() {
-        setSelecionado(true)
-    }
+
 
     return (
         <EstiloTela>
@@ -35,39 +42,47 @@ export default function Sessao() {
             </EstiloTitulo>
             <EstiloListaDeAcentos>
                 {assentos.length === 0 ? <p>carregando...</p> : assentos.map((item) => {
-                    return(
-                        <Assentos assentos={assentos}  item={item}/>
+                    return (
+                        <Assentos key={item.id} assentos={assentos} ids={ids} setIds={setIds} item={item} />
                     )
                 })}
                 <EstiloListaOpcoes>
-                    <EstiloOpcoes className="selecionado"/>
+                    <EstiloOpcoes className="selecionado" />
                     <p>Selecionado</p>
                 </EstiloListaOpcoes>
                 <EstiloListaOpcoes>
-                    <EstiloOpcoes className="disponivel"/>
+                    <EstiloOpcoes className="disponivel" />
                     <p>Disponível</p>
                 </EstiloListaOpcoes>
                 <EstiloListaOpcoes>
-                    <EstiloOpcoes className="indisponivel"/>
+                    <EstiloOpcoes className="indisponivel" />
                     <p>Indisponível</p>
                 </EstiloListaOpcoes>
             </EstiloListaDeAcentos>
             <EstiloDados>
                 <h1>Nome do comprador</h1>
-                <input placeholder="Digite seu nome..."></input>
+                <input onChange={(e) => {
+                    setNome(e.target.value)
+                    // console.log(nome)
+                }} placeholder="Digite seu nome..."></input>
                 <h1>CPF do comprador</h1>
-                <input placeholder="Digite seu CPF..."></input>
+                <input onChange={(e) => {
+                    setCPF(e.target.value)
+                    // console.log(CPF)
+                }} placeholder="Digite seu CPF (somente números)..."></input>
             </EstiloDados>
-            <EstiloBotao>
-                <p>Reservar assento(s)</p>
-            </EstiloBotao>
+            <Link to='/sucesso'>
+                <EstiloBotao onClick={mandarDados} >
+                    <p>Reservar assento(s)</p>
+                </EstiloBotao>
+            </Link>
             <EstiloFooter>
                 <EstiloContainerImgs>
                     {assentos.length === 0 ? <p>carregando...</p> : <img src={movie.posterURL} />}
                 </EstiloContainerImgs>
                 <EstiloContainerTexto>
                     {assentos.length === 0 ? <p>carregando...</p> : <h1>{movie.title}</h1>}
-                    {assentos.length === 0 ? <p>carregando...</p> : <h1>{data} - {hora}</h1>}
+                    {assentos.length === 0 ? <p>carregando...</p> : <h1>{dia} - {hora}</h1>}
                 </EstiloContainerTexto>
             </EstiloFooter>
         </EstiloTela>

@@ -1,9 +1,11 @@
 import styled from "styled-components"
 import axios from "axios"
 import { useEffect, useState } from "react"
+import { Link, useParams } from "react-router-dom"
+import Cartaz from "./Cartaz"
+
 
 export default function Catalogo() {
-
     const [filmes, setFilmes] = useState([])
 
     useEffect(() => {
@@ -20,7 +22,13 @@ export default function Catalogo() {
                 <h1>Selecione o filme</h1>
             </EstiloTitulo>
             <EstiloCatalogo>
-                {filmes.length === 0 ? <p>Carregando...</p> : filmes.map((item) => { console.log(item); return <EstiloCartaz><img src={item.posterURL} /></EstiloCartaz>})}
+                {filmes.length === 0 ? <p>Carregando...</p> : filmes.map((item) => {
+                    return (
+                        <Link to={`/sessoes/${item.id}`}>
+                            <Cartaz item={item}/>
+                        </Link>
+                    )
+                })}
             </EstiloCatalogo>
         </>
     )
@@ -43,18 +51,4 @@ const EstiloCatalogo = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 30px;
-`
-
-const EstiloCartaz = styled.div`
-    width: 145px;
-    height: 209px;
-    margin: 10px 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 0 5px lightgrey;
-    > img{
-        width: 129px;
-        height: 193px;
-    }
 `

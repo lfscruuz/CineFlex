@@ -1,6 +1,25 @@
+import { Link } from "react-router-dom"
 import styled from "styled-components"
 
-export default function Sucesso() {
+export default function Sucesso({ setHora, setDia, data, setData, movie, setMovie, nome, setNome, CPF, setCPF, ids, setIds, ingresso }) {
+
+
+    function formatarPedido() {
+        setHora('')
+        setDia('')
+        setData('')
+        setMovie({})
+        setNome('')
+        setCPF('')
+        setIds([])
+        ingresso = {
+            ids: {},
+            name: '',
+            cpf: ''
+        }
+    }
+    const cpfFormatado = CPF.split('')
+    console.log(cpfFormatado)
     return (
         <EstiloTela>
             <EstiloTitulo>
@@ -9,22 +28,31 @@ export default function Sucesso() {
             </EstiloTitulo>
             <EstiloDados>
                 <h1>Filme e Sessão</h1>
-                <p>Enola Holmes</p>
-                <p>24/06/2021 15:00</p>
+                <p>{movie.title}</p>
+                <p>{data}</p>
             </EstiloDados>
             <EstiloDados>
                 <h1>Ingressos</h1>
-                <p>Assento 15</p>
-                <p>Assento 16</p>
+                {ids.map((i) => {
+                    return (
+                        <p>Assento {i}</p>
+                    )
+
+                })}
             </EstiloDados>
             <EstiloDados>
                 <h1>Comprador</h1>
-                <p>Nome: João da Silva Sauro</p>
-                <p>CPF: 123.456.189-10</p>
+                <p>Nome: {nome}</p>
+                <p>
+                    CPF:
+                    {cpfFormatado[0]}{cpfFormatado[1]}{cpfFormatado[2]}.{cpfFormatado[3]}{cpfFormatado[4]}{cpfFormatado[5]}.{cpfFormatado[6]}{cpfFormatado[7]}{cpfFormatado[8]}-{cpfFormatado[9]}{cpfFormatado[10]}
+                </p>
             </EstiloDados>
-            <EstiloBotao>
-                <p>Voltar pra Home</p>
-            </EstiloBotao>
+            <Link to='/'>
+                <EstiloBotao>
+                    <p>Voltar pra Home</p>
+                </EstiloBotao>
+            </Link>
         </EstiloTela>
     )
 }

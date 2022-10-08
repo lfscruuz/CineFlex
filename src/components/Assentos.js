@@ -1,20 +1,24 @@
 import { useState } from "react"
 import styled from "styled-components"
 
-export default function Assentos({ assentos, item }) {
+export default function Assentos({ assentos, item, ids, setIds }) {
 
-    console.log(assentos)
     const [selecionado, setSelecionado] = useState(false)
-
-
+    const novoIDS = []
+    
     function selecionar() {
         if (!item.isAvailable){
             alert('Assento não disponível')
         }else{
             if(selecionado){
                 setSelecionado(false)
+                
+                ids.pop(Number(item.name))
+                console.log(ids)
             }else{
                 setSelecionado(true)
+                ids.push(Number(item.name))
+                console.log(ids)
             }
         }
         
@@ -22,7 +26,7 @@ export default function Assentos({ assentos, item }) {
 
 
     return (
-        <EstiloAssento onClick={selecionar} key={item.id} isAvailable={item.isAvailable} selecionado={selecionado}>
+        <EstiloAssento onClick={selecionar} isAvailable={item.isAvailable} selecionado={selecionado}>
             <p>{item.name}</p>
         </EstiloAssento>
     )

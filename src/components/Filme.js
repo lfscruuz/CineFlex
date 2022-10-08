@@ -1,15 +1,17 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
+import { Link, useParams } from "react-router-dom"
 import styled from "styled-components"
 import image1 from '../image.png'
 
 export default function Filme() {
     const [horarios, setHorarios] = useState([])
     const [sessao, setSessao] = useState({})
+    const {idFilme} = useParams()
 
 
     useEffect(() => {
-        const requisicao = axios.get('https://mock-api.driven.com.br/api/v5/cineflex/movies/7/showtimes')
+        const requisicao = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/movies/${idFilme}/showtimes`)
         requisicao.then((resposta) => {
             setSessao(resposta.data)
             setHorarios(resposta.data.days)
@@ -24,14 +26,18 @@ export default function Filme() {
             </EstiloTitulo>
             <div>
                 {horarios.length === 0 ? <p>carregando...</p> : horarios.map((item) => {
-                    console.log(item)
                     return (
                         <EstiloSessoes>
                             <p>{item.date}</p>
                             <EstiloContainerBotoes>
                                 {item.showtimes.map((st) => {
+                                    console.log(st)
                                     return (
-                                        <EstiloBotoes>{st.name}</EstiloBotoes>
+                                        <Link to={`/assentos/${st.id}`}>
+                                            <EstiloBotoes>
+                                                {st.name}
+                                            </EstiloBotoes>
+                                        </Link>
                                     )
                                 })}
                             </EstiloContainerBotoes>
