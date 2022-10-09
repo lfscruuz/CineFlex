@@ -18,6 +18,7 @@ export default function App() {
     const [nome, setNome] = useState('')
     const [CPF, setCPF] = useState('')
     const [ids, setIds] = useState([])
+    const [nomeDoAssento, setNomeDoAssento] = useState([])
     const ingresso = {
         ids: {},
         name: '',
@@ -40,6 +41,7 @@ export default function App() {
                         nome={nome} setNome={setNome}
                         CPF={CPF} setCPF={setCPF}
                         ids={ids} setIds={setIds}
+                        nomeDoAssento={nomeDoAssento} setNomeDoAssento={setNomeDoAssento}
                         ingresso={ingresso}
                     />
                 } />
@@ -52,6 +54,7 @@ export default function App() {
                     nome={nome} setNome={setNome}
                     CPF={CPF} setCPF={setCPF}
                     ids={ids} setIds={setIds}
+                    nomeDoAssento={nomeDoAssento}
                     ingresso={ingresso} 
                     />
                 } />

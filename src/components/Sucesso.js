@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 
-export default function Sucesso({ setHora, setDia, data, setData, movie, setMovie, nome, setNome, CPF, setCPF, ids, setIds, ingresso }) {
+export default function Sucesso({ setHora, setDia, data, setData, movie, setMovie, nome, setNome, CPF, setCPF, ids, setIds, nomeDoAssento, setNomeDoAssento, ingresso }) {
 
 
     function formatarPedido() {
@@ -12,14 +12,16 @@ export default function Sucesso({ setHora, setDia, data, setData, movie, setMovi
         setNome('')
         setCPF('')
         setIds([])
+        setNomeDoAssento([])
         ingresso = {
             ids: {},
             name: '',
             cpf: ''
         }
     }
+
+    nomeDoAssento.sort(function(a,b) {return a - b})
     const cpfFormatado = CPF.split('')
-    console.log(cpfFormatado)
     return (
         <EstiloTela>
             <EstiloTitulo>
@@ -33,7 +35,7 @@ export default function Sucesso({ setHora, setDia, data, setData, movie, setMovi
             </EstiloDados>
             <EstiloDados data-identifier="seat-infos-reserve-finished">
                 <h1>Ingressos</h1>
-                {ids.map((i) => {
+                {nomeDoAssento.map((i) => {
                     return (
                         <p key={i}>Assento {i}</p>
                     )

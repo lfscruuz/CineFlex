@@ -31,7 +31,6 @@ export default function Filme() {
                             <p>{item.date}</p>
                             <EstiloContainerBotoes >
                                 {item.showtimes.map((st) => {
-                                    console.log(st)
                                     return (
                                         <Link to={`/assentos/${st.id}`}>
                                             <EstiloBotoes data-identifier="hour-minute-btn">

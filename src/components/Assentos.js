@@ -1,7 +1,7 @@
 import { useState } from "react"
 import styled from "styled-components"
 
-export default function Assentos({ assentos, item, ids, setIds }) {
+export default function Assentos({ assentos, item, ids, setIds, nomeDoAssento, setNomeDoAssento }) {
 
     const [selecionado, setSelecionado] = useState(false)
     const novoIDS = []
@@ -12,13 +12,14 @@ export default function Assentos({ assentos, item, ids, setIds }) {
         }else{
             if(selecionado){
                 setSelecionado(false)
-                
-                ids.pop(Number(item.name))
-                console.log(ids)
+                ids.pop(Number(item.id))
+                nomeDoAssento.pop(Number(item.name))
+
             }else{
                 setSelecionado(true)
-                ids.push(Number(item.name))
-                console.log(ids)
+                ids.push(Number(item.id))
+                nomeDoAssento.push(Number(item.name))
+
             }
         }
         

@@ -5,25 +5,24 @@ import styled from "styled-components"
 import Assentos from "./Assentos"
 
 
-export default function Sessao({hora, setHora, dia, setDia, data, setData, movie, setMovie, nome, setNome, CPF, setCPF, ids, setIds, ingresso}) {
+export default function Sessao({ hora, setHora, dia, setDia, data, setData, movie, setMovie, nome, setNome, CPF, setCPF, ids, setIds, nomeDoAssento, setNomeDoAssento, ingresso }) {
 
     const [assentos, setAssentos] = useState([])
-    const {idSessao} = useParams()
+    const { idSessao } = useParams()
 
     function mandarDados() {
         setIds(ids)
-        console.log(ids)
+        setNomeDoAssento(nomeDoAssento)
         ingresso.ids = ids
         ingresso.name = nome
         ingresso.cpf = CPF
-        console.log(ingresso)
+        axios.post('https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many', ingresso)
     }
 
     useEffect(() => {
         const requisicao = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${idSessao}/seats`)
 
         requisicao.then((resposta) => {
-            console.log(resposta.data)
             setAssentos(resposta.data.seats)
             setHora(resposta.data.name)
             setDia(resposta.data.day.weekday)
@@ -43,19 +42,19 @@ export default function Sessao({hora, setHora, dia, setDia, data, setData, movie
             <EstiloListaDeAcentos>
                 {assentos.length === 0 ? <p>carregando...</p> : assentos.map((item) => {
                     return (
-                        <Assentos key={item.id} assentos={assentos} ids={ids} setIds={setIds} item={item} />
+                        <Assentos key={item.id} assentos={assentos} ids={ids} setIds={setIds} item={item} nomeDoAssento={nomeDoAssento} setNomeDoAssento={setNomeDoAssento} />
                     )
                 })}
                 <EstiloListaOpcoes>
-                    <EstiloOpcoes className="selecionado" ata-identifier="seat-selected-subtitle"/>
+                    <EstiloOpcoes className="selecionado" ata-identifier="seat-selected-subtitle" />
                     <p>Selecionado</p>
                 </EstiloListaOpcoes>
                 <EstiloListaOpcoes>
-                    <EstiloOpcoes className="disponivel" data-identifier="seat-available-subtitle"/>
+                    <EstiloOpcoes className="disponivel" data-identifier="seat-available-subtitle" />
                     <p>Disponível</p>
                 </EstiloListaOpcoes>
                 <EstiloListaOpcoes>
-                    <EstiloOpcoes className="indisponivel" data-identifier="seat-unavailable-subtitle"/>
+                    <EstiloOpcoes className="indisponivel" data-identifier="seat-unavailable-subtitle" />
                     <p>Indisponível</p>
                 </EstiloListaOpcoes>
             </EstiloListaDeAcentos>
@@ -63,12 +62,10 @@ export default function Sessao({hora, setHora, dia, setDia, data, setData, movie
                 <h1>Nome do comprador</h1>
                 <input data-identifier="buyer-name-input" onChange={(e) => {
                     setNome(e.target.value)
-                    // console.log(nome)
                 }} placeholder="Digite seu nome..."></input>
                 <h1>CPF do comprador</h1>
                 <input data-identifier="buyer-cpf-input" onChange={(e) => {
                     setCPF(e.target.value)
-                    // console.log(CPF)
                 }} placeholder="Digite seu CPF (somente números)..."></input>
             </EstiloDados>
             <Link to='/sucesso'>

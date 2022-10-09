@@ -25,7 +25,7 @@ export default function Catalogo() {
                 {filmes.length === 0 ? <p>Carregando...</p> : filmes.map((item) => {
                     return (
                         <Link to={`/sessoes/${item.id}`}>
-                            <Cartaz item={item}/>
+                            <Cartaz key={item.id} item={item}/>
                         </Link>
                     )
                 })}
